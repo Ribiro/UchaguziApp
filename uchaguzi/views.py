@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Candidate
+
 
 # Create your views here.
 def home_page(request):
@@ -7,4 +10,7 @@ def home_page(request):
 
 @login_required
 def candidates(request):
-    return render(request, 'uchaguzi/candidates.html')
+    context = {
+        'candidates': Candidate.objects.all()
+    }
+    return render(request, 'uchaguzi/candidates.html', context)
