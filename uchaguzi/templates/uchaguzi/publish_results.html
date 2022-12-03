@@ -1,0 +1,19 @@
+{% extends "uchaguzi/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <!-- <form method="POST" action="">
+            {%csrf_token%} -->
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Publish Results</legend>
+                <h2>Are you sure to publish the Results?</h2>
+                {%for result in results%}
+                    <p style="color: rgb(18, 18, 80)">{{result.candidate_first_name}} {{result.candidate_last_name}}: {{result.votes}}</p>
+                {%endfor%}
+            </fieldset>
+            <div class="form-group">
+                <a href="{% url 'uchaguzi-candidates'%}" class="btn btn-secondary">Go Back</a>
+                <a href="{%url 'publish-po-results'%}"><button class="btn btn-outline-danger">Yes, Publish</button></a>
+            </div>
+        <!-- </form> -->
+    </div>
+{% endblock content %}
