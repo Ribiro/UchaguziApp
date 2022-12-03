@@ -17,6 +17,9 @@ def candidates(request):
     show_publish_button = False
     if len(results) == len(candidates):
         show_publish_button = True
+    is_published = []
+    for result in results:
+        is_published.append(result.is_published)
     candidates_data = []
     if results:
         for candidate in candidates:
@@ -27,7 +30,7 @@ def candidates(request):
                 'last_name': candidate.last_name,
                 'party': candidate.party,
                 'id': candidate.id,
-                # 'is_published': candidate.is_published,
+                'is_published': is_published[0],
                 'po_result': the_result.first()
             })
     else:
@@ -37,21 +40,18 @@ def candidates(request):
                 'last_name': candidate.last_name,
                 'party': candidate.party,
                 'id': candidate.id,
-                # 'is_published': candidate.is_published,
+                'is_published': is_published[0],
                 'po_result': 'None'
             })
     candidates_data.reverse()
-    
-    is_published = False
-    for result in results:
-        is_published = result.is_published
-    print(is_published)
+    published = str(is_published[0])
+    print(published) 
     
     context = {
         'candidates': candidates_data,
         'show_publish_button': show_publish_button,
-        'is_publised': is_published,
         'po': po,
+        'published': published
     }
     return render(request, 'uchaguzi/candidates.html', context)
 

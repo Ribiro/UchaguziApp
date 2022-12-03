@@ -27,15 +27,15 @@
       <a href="{% url 'uchaguzi-candidates' %}">{{po.polling_station}}</a>/
       <a href="{% url 'uchaguzi-candidates' %}">Presidential Candidates</a>
     </label>
-    {%if show_publish_button%}
-      {%if is_published == 'False'%}
-        <a href="{% url 'confirm-publish-po-results'%}"><button type="button" class="btn btn-outline-success" style="float: right;">Publish Results</button></a>
+    <!-- {%if show_publish_button%} -->
+      {%if published == 'False'%}
+        <a href="{% url 'confirm-publish-po-results'%}"><button type="button" class="btn btn-outline-success" style="float: right;">Publish Results {{candidate.is_published}}</button></a>
       {%else%}
-        <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results</button>
+        <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results {{candidate.is_published}}</button>
       {%endif%}
-    {%else%}
+    <!-- {%else%}
       <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results</button>
-    {%endif%}
+    {%endif%} -->
   </div>
   <div class="card-deck mt-3">
     {%for candidate in candidates%}
@@ -47,7 +47,7 @@
           <p class="card-text">{{candidate.first_name}} {{candidate.last_name}}</p>
           <p class="card-text">Party: {{candidate.party}}</p>
           {%if candidate.po_result != None%}
-            <a href="{% url 'post-po-result' candidate.id%}"><button type="button" class="btn btn-secondary btn-sm" disabled>Add Results</button></a>
+            <a><button type="button" class="btn btn-secondary btn-sm" disabled>Add Results</button></a>
           {%else%}
             <a href="{% url 'post-po-result' candidate.id%}"><button type="button" class="btn btn-primary btn-sm">Add Results</button></a>
           {%endif%}
