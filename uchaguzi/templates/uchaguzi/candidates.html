@@ -27,15 +27,15 @@
       <a href="{% url 'uchaguzi-candidates' %}">{{po.polling_station}}</a>/
       <a href="{% url 'uchaguzi-candidates' %}">Presidential Candidates</a>
     </label>
-    <!-- {%if show_publish_button%} -->
+    {%if show_publish_button%}
       {%if published == 'False'%}
         <a href="{% url 'confirm-publish-po-results'%}"><button type="button" class="btn btn-outline-success" style="float: right;">Publish Results {{candidate.is_published}}</button></a>
       {%else%}
         <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results {{candidate.is_published}}</button>
       {%endif%}
-    <!-- {%else%}
+    {%else%}
       <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results</button>
-    {%endif%} -->
+    {%endif%}
   </div>
   <div class="card-deck mt-3">
     {%for candidate in candidates%}
