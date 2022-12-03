@@ -24,21 +24,35 @@
   <div>
     <label style="font-size: .95em;">
       <a href="{% url 'uchaguzi-home' %}">Home</a>/
+      <a href="{% url 'uchaguzi-candidates' %}">{{po.polling_station}}</a>/
       <a href="{% url 'uchaguzi-candidates' %}">Presidential Candidates</a>
     </label>
-    <button type="button" class="btn btn-outline-success" style="float: right;">Publish Results</button>
+    {%if show_publish_button%}
+      {%if is_published == 'False'%}
+        <a href="{% url 'confirm-publish-po-results'%}"><button type="button" class="btn btn-outline-success" style="float: right;">Publish Results</button></a>
+      {%else%}
+        <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results</button>
+      {%endif%}
+    {%else%}
+      <button type="button" class="btn btn-secondary" style="float: right;" disabled>Publish Results</button>
+    {%endif%}
   </div>
   <div class="card-deck mt-3">
     {%for candidate in candidates%}
-    <div class="card" style="background-color: #BDBDBD;">
-      <div class="card-body text-center">
-        PO Results: Empty
-        <img src="{% static 'uchaguzi/avatar.png' %}" alt="Avatar" style="width:100%">
-        <p class="card-text">{{candidate.first_name}} {{candidate.last_name}}</p>
-        <p class="card-text">Party: {{candidate.party}}</p>
-        <button type="button" class="btn btn-primary btn-sm">Add Results</button>
+      <div class="card" style="background-color: #BDBDBD;">
+        <div class="card-body text-center">
+          <label style="font-size: .85em;">PO Results</label>
+          <span><p style="color: yellow">{{candidate.po_result}}</p></span>
+          <img src="{% static 'uchaguzi/avatar.png' %}" alt="Avatar" style="width:100%">
+          <p class="card-text">{{candidate.first_name}} {{candidate.last_name}}</p>
+          <p class="card-text">Party: {{candidate.party}}</p>
+          {%if candidate.po_result != None%}
+            <a href="{% url 'post-po-result' candidate.id%}"><button type="button" class="btn btn-secondary btn-sm" disabled>Add Results</button></a>
+          {%else%}
+            <a href="{% url 'post-po-result' candidate.id%}"><button type="button" class="btn btn-primary btn-sm">Add Results</button></a>
+          {%endif%}
+        </div>
       </div>
-    </div>
     {%endfor%}
   </div>
 </div>
