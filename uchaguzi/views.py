@@ -32,9 +32,17 @@ def candidates(request):
     show_publish_button = False
     if len(results) == len(candidates):
         show_publish_button = True
+        
     is_published = []
+    published_status = ''
     for result in results:
         is_published.append(result.is_published)
+        
+    try:
+        published_status = is_published[0]
+    except:
+        published_status = False
+        
     candidates_data = []
     if results:
         for candidate in candidates:
@@ -45,7 +53,7 @@ def candidates(request):
                 'last_name': candidate.last_name,
                 'party': candidate.party,
                 'id': candidate.id,
-                'is_published': is_published[0],
+                'is_published': published_status,
                 'po_result': the_result.first()
             })
     else:
@@ -55,11 +63,11 @@ def candidates(request):
                 'last_name': candidate.last_name,
                 'party': candidate.party,
                 'id': candidate.id,
-                'is_published': is_published[0],
-                'po_result': 'None'
+                'is_published': published_status,
+                'po_result': None
             })
     candidates_data.reverse()
-    published = str(is_published[0])
+    published = str(published_status)
     print(published) 
     
     context = {
