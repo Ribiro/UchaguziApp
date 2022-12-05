@@ -9,18 +9,30 @@ from pygal.style import Style
 
 # Create your views here.
 def home_page(request):
-    bar_chart = pygal.Bar()
-    # Then create a bar graph
-    line_chart = pygal.HorizontalBar()
-    line_chart.title = 'Presidential Results'
-    line_chart.add('Raila', 20.5)
-    line_chart.add('Ruto', 36.7)
-    line_chart.add('Wajackoyah', 6.3)
-    line_chart.add('Mwaure', 4.5)
-    line_chart.add('Muite', 80.3)
-    chart = line_chart.render_data_uri()
+    polling_stations = PollingStation.objects.all()
+    po_results = POResult.objects.all()
+    
+    registered_voters = []
+    rejected_ballots = []
+    votes = []
+    
+    
+    for station in polling_stations:
+        registered_voters.append(station.registered_voters)
+        rejected_ballots.append(station.rejected_ballots)
+    
+    for result in po_results:
+        if result.is_published:
+            votes.append(result.votes)
+    
+    turnout = ((sum(votes) + sum(rejected_ballots))/sum(registered_voters))*100
+    
+    # turnout = 30.33
     context = {
-        'chart': chart
+        'registered_voters': sum(registered_voters),
+        'rejected_ballots': sum(rejected_ballots),
+        'votes': sum(votes),
+        'turnout': round(turnout, 2)
     }
     return render(request, 'uchaguzi/home.html', context)
 
@@ -101,9 +113,9 @@ class POResultCreateView(LoginRequiredMixin, CreateView):
 def confirm_publish_results(request):
     po = request.user
     results = po.po_results.all()
-    print('hi')
-    for result in results:
-        print(result)
+    # print('hi')
+    # for result in results:
+    #     print(result)
     context = {
         'results': results
     }
@@ -113,9 +125,15 @@ def confirm_publish_results(request):
 def publish_results(request):
     po = request.user
     results = po.po_results.all()
+    polling_station = PollingStation.objects.get(assigned_user=request.user)
+    
+    if request.method == 'POST':
+        rejected_ballots = request.POST['rejected_ballots']
+        polling_station.rejected_ballots = rejected_ballots
+        polling_station.save()
         
-    for result in results:
-        result.is_published = True
-        result.save()
+        for result in results:
+            result.is_published = True
+            result.save()
     return redirect('/candidates')    
         

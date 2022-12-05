@@ -9,6 +9,8 @@ class PollingStation(models.Model):
     constituency = models.CharField(max_length=50)
     sub_county = models.CharField(max_length=50)
     created_at = models.DateTimeField(default=timezone.now)
+    registered_voters = models.IntegerField(blank=True,null=True, default=0)
+    rejected_ballots = models.IntegerField(blank=True,null=True, default=0)
     assigned_user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True,null=True, related_name='polling_station')
     
     # special (dunder) method
