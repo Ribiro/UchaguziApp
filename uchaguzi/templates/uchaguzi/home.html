@@ -59,8 +59,8 @@
             <p class="card-description">
                 <div class="progress">
                     <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
-                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:99%;">
-                      23 out of 290 constituencies
+                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{submission_percentage}}%">
+                      {{submitted_polling_stations}} out of {{all_polling_stations}} Polling Stations
                     </div>
                   </div>
             </p>
@@ -76,39 +76,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Photo</td>
-                    <td>William</td>
-                    <td>Ruto</td>
-                    <td>100002</td>
-                    <td><label class="badge badge-danger">Pending</label></td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td>Raila</td>
-                    <td>Odinga</td>
-                    <td>98634</td>
-                    <td><label class="badge badge-warning">In progress</label></td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td>George</td>
-                    <td>Wajackoyah</td>
-                    <td>2231</td>
-                    <td><label class="badge badge-info">Fixed</label></td>
-                </tr>
-                <tr>
-                    <td>Photo</td>
-                    <td>Paul</td>
-                    <td>Muite</td>
-                    <td>184</td>
-                    <td><label class="badge badge-success">Completed</label></td>
-                </tr>
+                  {%for candidate in candidates%}
+                    <tr>
+                      <td>Photo</td>
+                      <td>{{candidate.first_name}}</td>
+                      <td>{{candidate.last_name}}</td>
+                      <td>{{candidate.votes}}</td>
+                      <td>
+                        <div class="progress">
+                          <div class="progress-bar" role="progressbar" style="width: {{candidate.percentage}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{candidate.percentage}}%</div>
+                        </div>
+                      </td>
+                    </tr>
+                  {%endfor%}
                 </tbody>
             </table>
             </div>
             </div>
         </div>
     </div>
-<!-- <img src="{{ chart |safe  }}", height="500px"> -->
 {% endblock content %}
