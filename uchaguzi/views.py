@@ -175,5 +175,5 @@ def publish_results(request):
         for result in po_results:
             if result.is_published:
                 votes.append(result.votes)
-    return redirect('/uchaguzi-home')    
+    return redirect('/')    
         
