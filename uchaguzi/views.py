@@ -15,24 +15,37 @@ def home_page(request):
     registered_voters = []
     rejected_ballots = []
     votes = []
+    all_polling_stations = []
+    submitted_polling_stations = []
+    
+    candidates = Candidate.objects.all()
+    
     
     
     for station in polling_stations:
         registered_voters.append(station.registered_voters)
         rejected_ballots.append(station.rejected_ballots)
+        all_polling_stations.append(station)
+        if station.is_submitted:
+            submitted_polling_stations.append(station)
     
     for result in po_results:
         if result.is_published:
             votes.append(result.votes)
     
     turnout = ((sum(votes) + sum(rejected_ballots))/sum(registered_voters))*100
+    submission_percentage = (len(submitted_polling_stations)/len(all_polling_stations))*100
     
     # turnout = 30.33
     context = {
         'registered_voters': sum(registered_voters),
         'rejected_ballots': sum(rejected_ballots),
         'votes': sum(votes),
-        'turnout': round(turnout, 2)
+        'turnout': round(turnout, 2),
+        'candidates': candidates,
+        'all_polling_stations': len(all_polling_stations),
+        'submitted_polling_stations': len(submitted_polling_stations),
+        'submission_percentage': round(submission_percentage, 2)
     }
     return render(request, 'uchaguzi/home.html', context)
 
@@ -124,16 +137,39 @@ def confirm_publish_results(request):
 @login_required
 def publish_results(request):
     po = request.user
+    votes = []
+    po_votes = []
+    po_results = POResult.objects.all()
     results = po.po_results.all()
     polling_station = PollingStation.objects.get(assigned_user=request.user)
+    
+    for result in po_results:
+        if result.is_published:
+            votes.append(result.votes)
     
     if request.method == 'POST':
         rejected_ballots = request.POST['rejected_ballots']
         polling_station.rejected_ballots = rejected_ballots
+        polling_station.is_submitted = True
         polling_station.save()
         
         for result in results:
             result.is_published = True
+            po_votes.append(result.votes)
             result.save()
+            
+            the_candidate = Candidate.objects.get(id_number=result.id_number)
+            the_candidate_votes = the_candidate.votes
+            the_candidate.votes = the_candidate_votes+result.votes
+            the_candidate.save()
+        for result in results:
+            if votes:
+                the_candidate.percentage = round((the_candidate_votes/sum(votes)*100), 2)
+                the_candidate.save()
+                print(the_candidate.percentage)
+            else:
+                the_candidate.percentage = round((the_candidate_votes/sum(po_votes)*100), 2)
+                the_candidate.save()
+                print(the_candidate.percentage)
     return redirect('/candidates')    
         

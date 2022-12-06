@@ -11,6 +11,7 @@ class PollingStation(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     registered_voters = models.IntegerField(blank=True,null=True, default=0)
     rejected_ballots = models.IntegerField(blank=True,null=True, default=0)
+    is_submitted = models.BooleanField(blank=True,null=True, default=False)
     assigned_user = models.OneToOneField(User, on_delete=models.PROTECT, blank=True,null=True, related_name='polling_station')
     
     # special (dunder) method
@@ -24,6 +25,8 @@ class Candidate(models.Model):
     id_number = models.IntegerField(blank=True,null=True, unique=True)
     seat = models.CharField(max_length=30)
     party = models.CharField(max_length=30)
+    votes = models.IntegerField(blank=True,null=True, default=0)
+    percentage = models.FloatField(blank=True,null=True, default=0.00)
     admin = models.ForeignKey(User, on_delete=models.PROTECT)
     
     # special (dunder) method
