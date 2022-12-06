@@ -78,6 +78,7 @@ def candidates(request):
                 'last_name': candidate.last_name,
                 'party': candidate.party,
                 'id': candidate.id,
+                'image': candidate.image,
                 'is_published': published_status,
                 'po_result': the_result.first()
             })
@@ -88,6 +89,7 @@ def candidates(request):
                 'last_name': candidate.last_name,
                 'party': candidate.party,
                 'id': candidate.id,
+                'image': candidate.image,
                 'is_published': published_status,
                 'po_result': None
             })

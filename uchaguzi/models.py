@@ -25,6 +25,7 @@ class Candidate(models.Model):
     id_number = models.IntegerField(blank=True,null=True, unique=True)
     seat = models.CharField(max_length=30)
     party = models.CharField(max_length=30)
+    image = models.FileField(upload_to='uchaguzi-candidates', blank=True,null=True, default='https://res.cloudinary.com/ribiro/image/upload/v1670337280/uchaguzi-candidates/avatar_kr1kf2.png')
     votes = models.IntegerField(blank=True,null=True, default=0)
     percentage = models.FloatField(blank=True,null=True, default=0.00)
     admin = models.ForeignKey(User, on_delete=models.PROTECT)

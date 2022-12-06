@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'uchaguzi.apps.UchaguziConfig',
     'users.apps.UsersConfig',
+    'cloudinary',
+    'cloudinary_storage'
 ]
 
 MIDDLEWARE = [
@@ -77,26 +80,26 @@ WSGI_APPLICATION = 'UchaguziApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES={
-#    'default':{
-#       'ENGINE':'django.db.backends.postgresql_psycopg2',
-#       'NAME':'uchaguzi',
-#       'USER':'postgres',
-#       'PASSWORD':'postgres',
-#       'HOST':'localhost',
-#       'PORT':'',
-#    }
-# }
 DATABASES={
    'default':{
       'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'railway',
+      'NAME':'uchaguzi',
       'USER':'postgres',
-      'PASSWORD':'DEQ783vQDd24kWfOF3Te',
-      'HOST':'containers-us-west-99.railway.app',
-      'PORT':'7133',
+      'PASSWORD':'postgres',
+      'HOST':'localhost',
+      'PORT':'',
    }
 }
+# DATABASES={
+#    'default':{
+#       'ENGINE':'django.db.backends.postgresql_psycopg2',
+#       'NAME':'railway',
+#       'USER':'postgres',
+#       'PASSWORD':'DEQ783vQDd24kWfOF3Te',
+#       'HOST':'containers-us-west-99.railway.app',
+#       'PORT':'7133',
+#    }
+# }
 
 
 # Password validation
@@ -148,3 +151,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'uchaguzi-home'
 LOGIN_URL = 'login'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'ribiro',
+    'API_KEY': '163912361214283',
+    'API_SECRET': 'GNQfjdkS9PWO9K9DeLIrYo0b0ZI'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

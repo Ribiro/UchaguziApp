@@ -78,7 +78,9 @@
                 <tbody>
                   {%for candidate in candidates%}
                     <tr>
-                      <td>Photo</td>
+                      <td>
+                        <img class="rounded-circle account-img" style="height: 50px; width:50px;" src="https://res.cloudinary.com/ribiro/image/upload/v1/{{candidate.image }}">
+                      </td>
                       <td>{{candidate.first_name}}</td>
                       <td>{{candidate.last_name}}</td>
                       <td>{{candidate.votes}}</td>
