@@ -43,7 +43,7 @@
         <div class="card-body text-center">
           <label style="font-size: .85em;">PO Results</label>
           <span><p style="color: yellow">{{candidate.po_result}}</p></span>
-          <img src="{% static 'uchaguzi/avatar.png' %}" alt="Avatar" style="width:100%">
+          <img style="height: 250px; width:210px;" src="https://res.cloudinary.com/ribiro/image/upload/v1/{{candidate.image }}">
           <p class="card-text">{{candidate.first_name}} {{candidate.last_name}}</p>
           <p class="card-text">Party: {{candidate.party}}</p>
           {%if candidate.po_result != None%}

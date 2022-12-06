@@ -78,13 +78,15 @@
                 <tbody>
                   {%for candidate in candidates%}
                     <tr>
-                      <td>Photo</td>
+                      <td>
+                        <img class="rounded-circle account-img" style="height: 50px; width:50px;" src="https://res.cloudinary.com/ribiro/image/upload/v1/{{candidate.image }}">
+                      </td>
                       <td>{{candidate.first_name}}</td>
                       <td>{{candidate.last_name}}</td>
                       <td>{{candidate.votes}}</td>
                       <td>
                         <div class="progress">
-                          <div class="progress-bar" role="progressbar" style="width: {{candidate.percentage}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{candidate.percentage}}%</div>
+                          <div class="progress-bar" role="progressbar" style="width: {{candidate.percentage}}%; color:yellow;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{candidate.percentage}}%</div>
                         </div>
                       </td>
                     </tr>
