@@ -80,26 +80,26 @@ WSGI_APPLICATION = 'UchaguziApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES={
-   'default':{
-      'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'uchaguzi',
-      'USER':'postgres',
-      'PASSWORD':'postgres',
-      'HOST':'localhost',
-      'PORT':'',
-   }
-}
 # DATABASES={
 #    'default':{
 #       'ENGINE':'django.db.backends.postgresql_psycopg2',
-#       'NAME':'railway',
+#       'NAME':'uchaguzi',
 #       'USER':'postgres',
-#       'PASSWORD':'DEQ783vQDd24kWfOF3Te',
-#       'HOST':'containers-us-west-99.railway.app',
-#       'PORT':'7133',
+#       'PASSWORD':'postgres',
+#       'HOST':'localhost',
+#       'PORT':'',
 #    }
 # }
+DATABASES={
+   'default':{
+      'ENGINE':'django.db.backends.postgresql_psycopg2',
+      'NAME':'railway',
+      'USER':'postgres',
+      'PASSWORD':'DEQ783vQDd24kWfOF3Te',
+      'HOST':'containers-us-west-99.railway.app',
+      'PORT':'7133',
+   }
+}
 
 
 # Password validation

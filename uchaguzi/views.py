@@ -18,8 +18,7 @@ def home_page(request):
     all_polling_stations = []
     submitted_polling_stations = []
     
-    candidates = Candidate.objects.all()
-    
+    candidates = Candidate.objects.all()       
     
     
     for station in polling_stations:
@@ -32,6 +31,16 @@ def home_page(request):
     for result in po_results:
         if result.is_published:
             votes.append(result.votes)
+    
+    for candidate in candidates:
+        candidate_votes = candidate.votes
+        try:
+            percentage = (candidate_votes/sum(votes))*100
+        except:
+            percentage = 0.0
+        candidate.percentage = round(percentage, 2)
+        print(candidate.percentage)
+        candidate.save()
     
     turnout = ((sum(votes) + sum(rejected_ballots))/sum(registered_voters))*100
     submission_percentage = (len(submitted_polling_stations)/len(all_polling_stations))*100
@@ -141,13 +150,10 @@ def publish_results(request):
     po = request.user
     votes = []
     po_votes = []
-    po_results = POResult.objects.all()
     results = po.po_results.all()
     polling_station = PollingStation.objects.get(assigned_user=request.user)
     
-    for result in po_results:
-        if result.is_published:
-            votes.append(result.votes)
+    
     
     if request.method == 'POST':
         rejected_ballots = request.POST['rejected_ballots']
@@ -164,14 +170,10 @@ def publish_results(request):
             the_candidate_votes = the_candidate.votes
             the_candidate.votes = the_candidate_votes+result.votes
             the_candidate.save()
-        for result in results:
-            if votes:
-                the_candidate.percentage = round((the_candidate_votes/sum(votes)*100), 2)
-                the_candidate.save()
-                print(the_candidate.percentage)
-            else:
-                the_candidate.percentage = round((the_candidate_votes/sum(po_votes)*100), 2)
-                the_candidate.save()
-                print(the_candidate.percentage)
-    return redirect('/candidates')    
+            
+        po_results = POResult.objects.all()
+        for result in po_results:
+            if result.is_published:
+                votes.append(result.votes)
+    return redirect('/uchaguzi-home')    
         
