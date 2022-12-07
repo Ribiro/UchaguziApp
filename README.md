@@ -42,4 +42,4 @@ $ pip install -r requirements.txt
 $ python manage.py runserver
 ```
 
-Authored by <a href="https://github.com/Ribiro">Denis Ribiro</a>
+Authored by <a target=”_blank”  href="https://github.com/Ribiro">Denis Ribiro</a>
