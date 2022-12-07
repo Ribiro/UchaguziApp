@@ -1,6 +1,6 @@
 # Uchaguzi App
 ## Overview
-Uchaguzi App is a web-based election results' transmission system. The development of this application was motivated by delay experinced in transmmitting in the recently conducted Kenya 2022 General Elections. The aim of this project is to ease the election transmission process, and make it as fast and as transparent as possible.
+Uchaguzi App is a web-based election results' transmission system. The development of this application was motivated by delay experienced in transmmitting in the recently conducted Kenya 2022 General Elections. The aim of this project is to ease the election transmission process, and make it as fast and as transparent as possible.
 
 The admin of this application, who in this case is the chief returning officer, will have the previledge of adding candidates, polling stations and their respective presiding officers into the system. The presiding officers will conduct their tallying process as usual and submit the results through the systems. The end user of this system will get to view the cumulative results as they stream from various presiding officers.
 
@@ -42,4 +42,4 @@ $ pip install -r requirements.txt
 $ python manage.py runserver
 ```
 
-Authored by <a href="https://github.com/Ribiro">Denis Ribiro</a>
+Authored by <a target=”_blank”  href="https://github.com/Ribiro">Denis Ribiro</a>
