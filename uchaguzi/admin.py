@@ -8,4 +8,4 @@ from .models import PollingStation, Candidate, POResult
 # admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(PollingStation)
 admin.site.register(Candidate)
-admin.site.register(POResult)
+# admin.site.register(POResult)
